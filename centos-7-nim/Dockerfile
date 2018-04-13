@@ -9,4 +9,6 @@ RUN yum install -y gcc \
     && ./koch tools \
     && ln -s /nim-0.18.0/bin/nim /usr/bin/nim
 
+WORKDIR /src
+
 CMD ["/bin/bash"]
