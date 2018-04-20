@@ -8,7 +8,8 @@ Source: [Building Dart on CentOS, Red Hat, Fedora and Amazon Linux AMI](https://
 
     cd ~/src
     git clone https://chromium.googlesource.com/chromium/tools/depot_tools
-    git clone https://github.com/dart-lang/sdk dart-sdk
+
+Note: Don't clone the dart-lang/sdk repo. Running the `fetch` command inside the container will fetch all the files you need.
 
 ## Build
 
@@ -18,7 +19,7 @@ Source: [Building Dart on CentOS, Red Hat, Fedora and Amazon Linux AMI](https://
 
     docker run -it --mount type=bind,source=$HOME/src,target=/src centos-7-dart
 
-## Compile release build
+## Compile standalone executable
 
 Once inside the container, run:
 
@@ -26,8 +27,9 @@ Once inside the container, run:
     mkdir dart-sdk
     cd dart-sdk
     fetch dart
+    cd sdk
     tools/build.py --mode=release --arch=x64 runtime
 
-The fetch step actually takes a really long time.
+The fetch step actually takes a really long time. It may actually error out (for me, it was unable to install some fuchsia thing). Regardless, proceed with the build step.
 
-The standalone executable should be at `out/ReleaseX64/dart`.
+Once the build has completed, the standalone executable can be found at `out/ReleaseX64/dart`.
