@@ -28,10 +28,11 @@ Once inside the container, run:
     cd dart-sdk
     fetch dart
     cd sdk
+    git checkout 2.0.0-dev.49.0
     tools/build.py --mode=release --arch=x64 runtime
 
 The fetch step actually takes a really long time because it will download something like 10 GB (!). It may actually error out (for me, it was unable to install some fuchsia thing). Regardless, proceed with the build step.
 
-Once the build has completed, the standalone executable can be found at `out/ReleaseX64/dart`.
+The tag you checkout should match what you get when you run `dart --version` on your host machine. If the version doesn't match, you will not be able to run snapshots built by other versions of Dart. However, you will still be able to execute source files.
 
-Question: How to build a specific version of Dart?
+The build will generally take less than an hour. Once the build has completed, the standalone executable can be found at `out/ReleaseX64/dart`.
