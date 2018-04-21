@@ -30,6 +30,8 @@ Once inside the container, run:
     cd sdk
     tools/build.py --mode=release --arch=x64 runtime
 
-The fetch step actually takes a really long time. It may actually error out (for me, it was unable to install some fuchsia thing). Regardless, proceed with the build step.
+The fetch step actually takes a really long time because it will download something like 10 GB (!). It may actually error out (for me, it was unable to install some fuchsia thing). Regardless, proceed with the build step.
 
 Once the build has completed, the standalone executable can be found at `out/ReleaseX64/dart`.
+
+Question: How to build a specific version of Dart?
