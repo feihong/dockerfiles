@@ -20,4 +20,6 @@ RUN yum -y update \
     && ln -s /opt/elixir-$ELIXIR_VERSION/bin/elixir /usr/bin/elixir \
     && ln -s /opt/elixir-$ELIXIR_VERSION/bin/elixirc /usr/bin/elixirc
 
+RUN mix local.hex --force
+
 CMD ["/bin/bash"]
