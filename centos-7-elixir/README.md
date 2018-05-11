@@ -14,8 +14,11 @@ Source: https://gist.github.com/binarytemple-clients/52bec05fc9bdba80d737
 
 ## Compile for release
 
-    docker run -it --mount type=bind,source=`pwd`,target=/src centos-7-elixir \
-      ENV=prod mix release --env=prod
+    docker run -it \
+      --mount type=bind,source=`pwd`,target=/src \
+      -e "MIX_ENV=prod" \
+      centos-7-elixir \
+      mix release --env=prod
 
 ## Links
 
