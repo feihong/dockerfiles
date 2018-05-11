@@ -1,1 +1,3 @@
-mono-*
+output/*
+mono-src
+*.exe

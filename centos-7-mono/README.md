@@ -4,34 +4,42 @@ This helps you compile mono to deploy on WebFaction.
 
 ## Prerequisites
 
-    wget http://download.mono-project.com/sources/mono/mono-5.10.1.47.tar.bz2
-    tar jxf mono-5.10.1.47.tar.bz2
+    export MONO_VERSION=5.10.1.47
+    git clone https://github.com/mono/mono mono-src
+    git checkout mono-$MONO_VERSION
 
-Source: https://gist.github.com/andreazevedo/9479518
-
-## Build
+## Build the container
 
     docker build -t centos-7-mono .
 
-## Run
+## Start the container
 
-    docker run -it --mount type=bind,source=$PWD,target=/src centos-7-mono
+    export SERVER_PREFIX=/home/fhsu/mono
+    docker run -it \
+      -e "SERVER_PREFIX=$SERVER_PREFIX"
+      --mount type=bind,source=`pwd`,target=/src \
+      --mount type=bind,source=`pwd`/output,target=$SERVER_PREFIX  \
+      centos-7-mono
 
 ## Compile Mono
 
 Once inside the container, run:
 
-    cd /src/mono-5.10.1.47
-    ./configure
-    make && make install
+    cd /src/mono-src
+    ./autogen.sh --prefix=$SERVER_PREFIX
+    make
+    make install
 
-Compilation will take a pretty good amount of time.
+Note that both `make` and `make install` commands take a really long time.
 
-Source: http://www.mono-project.com/docs/compiling-mono/linux/
+Source: http://www.mono-project.com/docs/compiling-mono/linux/#building-mono-from-a-git-source-code-checkout
 
 ## Run program inside CentOS container
 
+    export SERVER_PREFIX=/home/fhsu
     docker run -it -p 8001:8001 \
+      -e "SERVER_PREFIX=$SERVER_PREFIX" \
+      --mount type=bind,source=`pwd`/output,target=$SERVER_PREFIX \
       --mount type=bind,source=$HOME/work/fsharp-quickstart,target=/src \
       centos-7-mono \
-      mono server.exe
+      $SERVER_PREFIX/bin/mono server.exe
