@@ -1,3 +1,4 @@
 output/*
 mono-src
 *.exe
+*.dll

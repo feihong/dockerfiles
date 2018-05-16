@@ -1,4 +1,4 @@
-# CentOS 7 for F#
+# CentOS 7 for Mono
 
 This helps you compile mono to deploy on WebFaction.
 
@@ -16,7 +16,7 @@ This helps you compile mono to deploy on WebFaction.
 
     export SERVER_PREFIX=/home/fhsu/mono
     docker run -it \
-      -e "SERVER_PREFIX=$SERVER_PREFIX"
+      -e "SERVER_PREFIX=$SERVER_PREFIX" \
       --mount type=bind,source=`pwd`,target=/src \
       --mount type=bind,source=`pwd`/output,target=$SERVER_PREFIX  \
       centos-7-mono
@@ -30,13 +30,13 @@ Once inside the container, run:
     make
     make install
 
-Note that both `make` and `make install` commands take a really long time.
+Note that `autogen.sh` finishes pretty quickly, but both `make` and `make install` take a really long time.
 
 Source: http://www.mono-project.com/docs/compiling-mono/linux/#building-mono-from-a-git-source-code-checkout
 
 ## Run program inside CentOS container
 
-    export SERVER_PREFIX=/home/fhsu
+    export SERVER_PREFIX=/home/fhsu/mono
     docker run -it -p 8001:8001 \
       -e "SERVER_PREFIX=$SERVER_PREFIX" \
       --mount type=bind,source=`pwd`/output,target=$SERVER_PREFIX \
