@@ -27,10 +27,20 @@ Once inside the container, run:
 
     cd /src/mono-src
     ./autogen.sh --prefix=$SERVER_PREFIX
+    make clean
     make
     make install
 
-Note that `autogen.sh` finishes pretty quickly, but both `make` and `make install` take a really long time.
+Note that `autogen.sh` finishes pretty quickly, but both `make` and `make install` take a really long time. You only need to run `make clean` if you get errors like  `ln: failed to create symbolic link '/src/mono-src/mcs/class/lib/build': File exists`.
+
+Install mono to server:
+
+    tar cvfz mono.tar.gz output
+    scp mono.tar.gz user.webfactional.com/~
+    ssh user.webfactional.com
+    tar xvfz mono.tar.gz
+    mv output mono
+    ln -s $HOME/mono/bin/mono $HOME/bin/mono
 
 Source: http://www.mono-project.com/docs/compiling-mono/linux/#building-mono-from-a-git-source-code-checkout
 
